@@ -1,49 +1,51 @@
 import React, {Component} from 'react';
+import api from '../../api.js';
+
 import './Tasks.css';
 
 export default class Tasks extends Component {
-
-  _handleLogin = () => {
-    // // deep destructuring equivalent to (let email = this.refs.email.value;)
-    // let { email: {value: email}, password: {value: password} } = this.refs;
-    // if (email && password) {
-    //   auth.login(email, password)
-    //   .then(res => {
-    //     this.props.router.push('/');
-    //   })
-    //   .catch(console.error);
-    // }
-    // else {
-    //   this.setState({ error: "Please enter an email and password"});
-    // }
+  
+  constructor() {
+    super();
+    this.state = {
+      tasks: []
+    }
+  }
+  
+  componentDidMount() {
+    this.fetchTasks();
+  }
+  
+  fetchTasks = () => {
+    api.getTasks(localStorage.username)
+    .then(res => {
+      this.setState({
+        tasks: res.body.tasks
+      });
+    });
+  }
+  
+  _handleLogout = () => {
+    this.props.router.push('/');
   }
 
-//   _handleTyping = (e) => {
-//     if (this.state && this.state.error) {
-//       this.setState({ error: null });
-//     }
-//     if (e.keyCode===ENTER) {
-//       this._handleLogin();
-//     }
-//   }
-
   render() {
+    let tasks = this.state.tasks;
     return (
-      <p>Tasks page {localStorage.username}</p>
-    //   <div className="formBackground">
-    //     <div className="authForm">
-    //       <h1 className="title">Login</h1>
-    //       <input type="text" ref="email" placeholder="email"
-    //         onKeyUp={this._handleTyping}
-    //       />
-    //       <input type="password" ref="password" placeholder="password"
-    //         onKeyUp={this._handleTyping}
-    //       />
-    //       <div className="button">
-    //         <button onClick={this._handleLogin}>login</button>
-    //       </div>
-    //     </div>
-    //   </div>
+      <div className='login-container'>
+        <h1>Tasks page</h1>
+        <div className='login-form'>
+          <select onChange={this._handleChange}>
+            { tasks && tasks.length > 0 ?
+            tasks.map(task => 
+              (<option key={task.id} value={task.title}>{task.title}</option>)
+            ) 
+            : null }
+          </select>
+          <button onClick={this._handleLogin}>Login</button>
+        </div>
+        <button type="button" onClick={this._handleLogout}>Logout</button>
+      </div>
     );
   }
 

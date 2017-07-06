@@ -17,7 +17,6 @@ export default class Login extends Component {
   }
   
   fetchAllUsers = () => {
-    // Promise.resolve([api.getUsers()])
     api.getUsers()
     .then(res => {
       this.setState({
@@ -29,7 +28,6 @@ export default class Login extends Component {
 
   _handleLogin = () => {
     let username = this.state.username;
-    console.log(username)
     localStorage.username = username;
     this.props.router.push('/tasks');
   }
@@ -42,7 +40,6 @@ export default class Login extends Component {
 
   render() {
     let users = this.state.users;
-    console.log(users, 'yo')
     return (
       <div className='login-container'>
         <h1>Login page</h1>
