@@ -29,9 +29,12 @@ export default class Tasks extends Component {
   _handleLogout = () => {
     this.props.router.push('/');
   }
-
+  
+  
+  
   render() {
     let tasks = this.state.tasks;
+    let that = this;
     return (
       <div className='login-container'>
         <h1>Tasks page</h1>
@@ -45,6 +48,7 @@ export default class Tasks extends Component {
               dueDate={task.dueDate}
               starred={task.starred}
               status={task.status}
+              refreshPage={that.fetchTasks}
             />
           )}
         </div>
