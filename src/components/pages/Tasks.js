@@ -11,7 +11,8 @@ export default class Tasks extends Component {
     super();
     this.state = {
       tasks: [],
-      creating: false
+      creating: false,
+      onlyStarred: false
     }
   }
   
@@ -45,6 +46,12 @@ export default class Tasks extends Component {
     })
   }
   
+  _handleFilter = () => {
+    this.setState({
+      onlyStarred: !this.state.onlyStarred
+    })
+  }
+  
   render() {
     let tasks = this.state.tasks;
     let that = this;
@@ -59,19 +66,41 @@ export default class Tasks extends Component {
         : null
       }
         <h1>Tasks page</h1>
+        <p className="filter-option" onClick={this._handleFilter}> {this.state.onlyStarred ? "Show All" : "Show Starred Only"} </p>
         <div className='task-list'>
-          { tasks.map(task => 
-            <TaskCard 
-              key={task.id}
-              id={task.id}
-              title={task.title}
-              description={task.description}
-              dueDate={task.dueDate}
-              starred={task.starred}
-              status={task.status}
-              refreshPage={that.fetchTasks}
-            />
-          )}
+          { tasks.map(task => {
+            if (this.state.onlyStarred) {
+              if (task.starred) {
+                return (
+                  <TaskCard 
+                    key={task.id}
+                    id={task.id}
+                    title={task.title}
+                    description={task.description}
+                    dueDate={task.dueDate}
+                    starred={task.starred}
+                    status={task.status}
+                    refreshPage={that.fetchTasks}
+                  />
+                );
+              } else {
+                return null;
+              }
+            } else {
+              return (
+                <TaskCard 
+                  key={task.id}
+                  id={task.id}
+                  title={task.title}
+                  description={task.description}
+                  dueDate={task.dueDate}
+                  starred={task.starred}
+                  status={task.status}
+                  refreshPage={that.fetchTasks}
+                />
+              );
+            }
+          })}
         </div>
         <div className="buttons">
           <button className="new-task-button" type="button" onClick={this._handleCreate}>Add new task</button>

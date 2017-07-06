@@ -23,3 +23,9 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.filter-option {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
