@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import api from '../../api.js';
 import TaskCard from '../elements/TaskCard';
+import CreateTask from '../modals/CreateTask.js';
 
 import './Tasks.css';
 
@@ -9,7 +10,8 @@ export default class Tasks extends Component {
   constructor() {
     super();
     this.state = {
-      tasks: []
+      tasks: [],
+      creating: false
     }
   }
   
@@ -21,7 +23,8 @@ export default class Tasks extends Component {
     api.getTasks(localStorage.username)
     .then(res => {
       this.setState({
-        tasks: res.body.tasks
+        tasks: res.body.tasks,
+        creating: false
       });
     });
   }
@@ -30,13 +33,31 @@ export default class Tasks extends Component {
     this.props.router.push('/');
   }
   
+  _handleCreate = () => {
+    this.setState({
+      creating: true
+    })
+  }
   
+  _buttonEventCancelled = () => {
+    this.setState({
+      creating: false
+    })
+  }
   
   render() {
     let tasks = this.state.tasks;
     let that = this;
     return (
-      <div className='login-container'>
+      <div className='task-list-container'>
+      {this.state.creating ?
+        <div className="popUpForm">
+          <CreateTask 
+            eventCancelled={this._buttonEventCancelled}
+            whenSubmitted={this.fetchTasks}/>
+        </div>
+        : null
+      }
         <h1>Tasks page</h1>
         <div className='task-list'>
           { tasks.map(task => 
@@ -52,7 +73,10 @@ export default class Tasks extends Component {
             />
           )}
         </div>
-        <button className="logout-button" type="button" onClick={this._handleLogout}>Logout</button>
+        <div className="buttons">
+          <button className="new-task-button" type="button" onClick={this._handleCreate}>Add new task</button>
+          <button className="logout-button" type="button" onClick={this._handleLogout}>Logout</button>
+        </div>
       </div>
     );
   }

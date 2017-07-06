@@ -47,7 +47,23 @@ export default class TaskCard extends Component {
               starred={starred}
               eventCancelled={this._buttonEventCancelled}
               whenSubmitted={this.props.refreshPage}/>
-          </div>:null}
+          </div>
+          : null
+        }
+        {this.state.deleting ?
+          <div className="popUpForm">
+            <DeleteTask 
+              id={this.props.id}
+              title={title}
+              description={description}
+              status={status}
+              dueDate={dueDate}
+              starred={starred}
+              eventCancelled={this._buttonEventCancelled}
+              whenSubmitted={this.props.refreshPage}/>
+          </div>
+          : null
+        }
         <div className="task-card_text-content">
           <h2 className={`task-card_title ${status}`}>{title} ({status})</h2>
           <p>{description}</p>

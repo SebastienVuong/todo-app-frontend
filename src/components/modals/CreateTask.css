@@ -1,8 +1,9 @@
-.edit-form_title {
+.create-form_title {
     color: lightyellow;
 }
 
-.edit-form {
+.create-form {
+    text-align: left;
     padding-top: 20vh;
     padding-left: 40vw;
     color: lightyellow;

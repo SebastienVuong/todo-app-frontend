@@ -1,0 +1,19 @@
+.delete-form_title {
+    color: lightyellow;
+}
+
+.delete-form {
+    padding-top: 20vh;
+    padding-left: 40vw;
+    color: lightyellow;
+}
+
+.delete-form > input {
+    color: dimgray;
+    background-color: lightgray;
+}
+
+.delete-form button {
+    margin: 10px;
+    padding: 9px;
+}

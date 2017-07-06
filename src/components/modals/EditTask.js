@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import api from '../../api.js';
 import './EditTask.css';
 
-export default class CreateBoard extends Component {
+export default class EditTask extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,20 +14,6 @@ export default class CreateBoard extends Component {
         starred: this.props.starred
     };
   }
-
-//   _handleInput = () => {
-//     if(this.refs.description.value.length <= 100){
-//         this.setState({
-//         description:this.refs.description.value
-//         });
-//     }
-//   }
-
-//   _handleTyping = (e) => {
-//     if (e.keyCode===ENTER) {
-//       this._handleClick();
-//     }
-//   }
 
   _handleEdit = () => {
     let taskData = {
@@ -56,20 +42,20 @@ export default class CreateBoard extends Component {
           Title <br/>
           <input type="text" ref="title" placeholder="Title"
             defaultValue={this.state.title}
-          /> <br/>
+          /> <br/> <br/>
           Description <br/>
           <input type="text" ref="description" placeholder="Description"
             defaultValue={this.state.description}
-          /> <br/>
+          /> <br/> <br/>
           Status <br/>
           <select ref="status">
             <option key="Pending" value="Pending">Pending</option>
             <option key="Done" value="Done">Done</option>
-          </select> <br/>
+          </select> <br/> <br/>
           Due date (YYYY/MM/DD) <br/>
           <input type="text" ref="dueDate" placeholder="Due date"
             defaultValue={this.state.dueDate}
-          /> <br/>
+          /> <br/> <br/>
           Star
           <input type="checkbox" ref="starred" value={1}/> <br/> <br/> <br/>
           <div className="button">
