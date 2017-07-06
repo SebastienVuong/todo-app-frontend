@@ -51,7 +51,7 @@ export default class Login extends Component {
             ) 
             : null }
           </select>
-          <button onClick={this._handleLogin}>Login</button>
+          <button className="login-button" onClick={this._handleLogin}>Login</button>
         </div>
       </div>
     );

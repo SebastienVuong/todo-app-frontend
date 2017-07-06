@@ -20,7 +20,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        App component
+        <div className="banner">
+          To-Do List App
+        </div>
         <div>
             {React.cloneElement(this.props.children)}
         </div>

@@ -2,23 +2,11 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.banner {
+  border-style: solid;
+  border-color: gray;
+  font-size: 3em;
+  background-image: url('https://previews.123rf.com/images/rudchenko/rudchenko1405/rudchenko140500046/28800530-Abstract-strip-pencil-scribbles-background-Paper-texture--Stock-Photo.jpg');
+  background-size: cover;
+  background-position: center;
 }

@@ -1,0 +1,9 @@
+.task-list {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.logout-button {
+    font-size: 1.5em;
+    border-radius: 10px;
+}

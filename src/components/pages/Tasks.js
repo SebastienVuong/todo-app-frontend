@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import api from '../../api.js';
+import TaskCard from '../elements/TaskCard';
 
 import './Tasks.css';
 
@@ -34,17 +35,20 @@ export default class Tasks extends Component {
     return (
       <div className='login-container'>
         <h1>Tasks page</h1>
-        <div className='login-form'>
-          <select onChange={this._handleChange}>
-            { tasks && tasks.length > 0 ?
-            tasks.map(task => 
-              (<option key={task.id} value={task.title}>{task.title}</option>)
-            ) 
-            : null }
-          </select>
-          <button onClick={this._handleLogin}>Login</button>
+        <div className='task-list'>
+          { tasks.map(task => 
+            <TaskCard 
+              key={task.id}
+              id={task.id}
+              title={task.title}
+              description={task.description}
+              dueDate={task.dueDate}
+              starred={task.starred}
+              status={task.status}
+            />
+          )}
         </div>
-        <button type="button" onClick={this._handleLogout}>Logout</button>
+        <button className="logout-button" type="button" onClick={this._handleLogout}>Logout</button>
       </div>
     );
   }
