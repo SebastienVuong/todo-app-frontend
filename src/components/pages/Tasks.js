@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 import api from '../../api.js';
 import TaskCard from '../elements/TaskCard';
 import CreateTask from '../modals/CreateTask.js';
@@ -12,7 +13,9 @@ export default class Tasks extends Component {
     this.state = {
       tasks: [],
       creating: false,
-      onlyStarred: false
+      onlyStarred: false,
+      today: moment().format("YYYY/MM/DD"),
+      hidePast: false
     }
   }
   
@@ -23,8 +26,28 @@ export default class Tasks extends Component {
   fetchTasks = () => {
     api.getTasks(localStorage.username)
     .then(res => {
+      let tasks = res.body.tasks;
+      if (this.state.hidePast) {
+        let refinedTasks = [];
+        tasks.forEach(task => {
+          if (this.state.today <= task.dueDate) {
+            refinedTasks.push(task);
+          }
+        })
+        tasks = refinedTasks;
+      }
+      if (this.state.onlyStarred) {
+        let refinedTasks = [];
+        console.log(refinedTasks)
+        tasks.forEach(task => {
+          if (task.starred) {
+            refinedTasks.push(task);
+          }
+        })
+        tasks = refinedTasks;
+      }
       this.setState({
-        tasks: res.body.tasks,
+        tasks: tasks,
         creating: false
       });
     });
@@ -47,9 +70,17 @@ export default class Tasks extends Component {
   }
   
   _handleFilter = () => {
+    this.fetchTasks();
     this.setState({
       onlyStarred: !this.state.onlyStarred
     })
+  }
+  
+  _handlePast = () => {
+    this.fetchTasks();
+    this.setState({
+      hidePast: !this.state.hidePast
+    });
   }
   
   render() {
@@ -67,40 +98,20 @@ export default class Tasks extends Component {
       }
         <h1>Tasks page</h1>
         <p className="filter-option" onClick={this._handleFilter}> {this.state.onlyStarred ? "Show All" : "Show Starred Only"} </p>
+        <p className="filter-option" onClick={this._handlePast}> {this.state.hidePast ? "Show Past Tasks" : "Hide Past Tasks"} </p>
         <div className='task-list'>
-          { tasks.map(task => {
-            if (this.state.onlyStarred) {
-              if (task.starred) {
-                return (
-                  <TaskCard 
-                    key={task.id}
-                    id={task.id}
-                    title={task.title}
-                    description={task.description}
-                    dueDate={task.dueDate}
-                    starred={task.starred}
-                    status={task.status}
-                    refreshPage={that.fetchTasks}
-                  />
-                );
-              } else {
-                return null;
-              }
-            } else {
-              return (
-                <TaskCard 
-                  key={task.id}
-                  id={task.id}
-                  title={task.title}
-                  description={task.description}
-                  dueDate={task.dueDate}
-                  starred={task.starred}
-                  status={task.status}
-                  refreshPage={that.fetchTasks}
-                />
-              );
-            }
-          })}
+          { tasks.map(task => 
+            <TaskCard 
+              key={task.id}
+              id={task.id}
+              title={task.title}
+              description={task.description}
+              dueDate={task.dueDate}
+              starred={task.starred}
+              status={task.status}
+              refreshPage={that.fetchTasks}
+            />
+          )}
         </div>
         <div className="buttons">
           <button className="new-task-button" type="button" onClick={this._handleCreate}>Add new task</button>
