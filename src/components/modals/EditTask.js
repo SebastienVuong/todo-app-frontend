@@ -26,6 +26,7 @@ export default class EditTask extends Component {
     api.editTask(this.state.taskId, taskData)
     .then(res => {
       this.props.whenSubmitted();  
+      this.props.eventCancelled();
     })
     
   }

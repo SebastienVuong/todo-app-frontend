@@ -1,3 +1,3 @@
 module.exports = {
-  API_HOST: "https://todo-app-backend-sebastienvuong.c9users.io"
+  API_HOST: "https://todo-app-ferst.herokuapp.com"
 }

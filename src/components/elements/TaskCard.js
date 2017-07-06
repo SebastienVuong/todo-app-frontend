@@ -33,7 +33,6 @@ export default class TaskCard extends Component {
 
   render() {
     let {title, description, status, dueDate, starred} = this.props;
-
     return (
       <div className="task-card_content">
         {this.state.editing ?

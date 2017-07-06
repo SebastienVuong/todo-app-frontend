@@ -38,7 +38,6 @@ export default class Tasks extends Component {
       }
       if (this.state.onlyStarred) {
         let refinedTasks = [];
-        console.log(refinedTasks)
         tasks.forEach(task => {
           if (task.starred) {
             refinedTasks.push(task);
